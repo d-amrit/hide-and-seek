@@ -1,6 +1,7 @@
 import numpy as np
 from catch22 import catch22_all
-from itertools import chain
+import itertools
+from pulp import LpVariable, LpProblem, LpMaximize
 
 
 DECILES = np.arange(0, 1.1, 0.1)
@@ -13,7 +14,7 @@ def calc_pos_neg_ratio_var_mean(formula, n, formula_details):
     """
 
     # Flatten clauses
-    flattened_clauses = list(chain(*formula.clauses))
+    flattened_clauses = list(itertools.chain(*formula))
 
     # Create variable list. None added for easier indexing.
     var_list = [None] + [[0, 0] for _ in range(1, n + 1)]
@@ -36,7 +37,6 @@ def calculate_lp_slack_coeff_of_var(formula, n, formula_details):
     """
     From Predicting Satisfiability at the Phase Transition, Xu et al. (2012)
     """
-    from pulp import LpVariable, LpProblem, LpMaximize
     # Initialize maximization problem.
     problem = LpProblem("SAT_Relaxation", LpMaximize)
 
@@ -45,7 +45,7 @@ def calculate_lp_slack_coeff_of_var(formula, n, formula_details):
 
     # Calculate objective and add constraint for each clause.
     objective = 0
-    for clause in formula.clauses:
+    for clause in formula:
         # Number of literals in the clause that evaluate to true.
         no_true_literals = sum([var_list[literal] if literal > 0 else 1 - var_list[abs(literal)] for literal in clause])
 

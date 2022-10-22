@@ -54,7 +54,8 @@ def read_formula_from_file(npz_path, m, k=3):
     sign[sign == 0] = -1
     sign = sign.reshape(m, k)
     formula = np.multiply(unsigned_clauses, sign).tolist()
-    return formula, formula_data['y_sat']
+    assignment = formula_data['y_sat'] if 'y_sat' in formula_data else []
+    return formula, assignment
 
 
 def check_clause_satisfiability(assignment, clause):

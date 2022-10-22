@@ -47,6 +47,7 @@ class Classifier:
         _param_grid = copy.deepcopy(self.param_grid)
         _param_grid['random_state'] = seed
         model = self.classifier(**_param_grid)
+        model = model.fit(x_train, y_train)
         return model.score(x_test, y_test)
 
     def train(self):

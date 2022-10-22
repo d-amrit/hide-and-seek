@@ -30,11 +30,25 @@ class Paths:
 
 if __name__ == '__main__':
     args_dict = utilities.parse_arguments()
+
+    args_dict['run_solver'] = False
+    args_dict['create_dataset'] = False
+    args_dict['train_model'] = False
+    args_dict['create_figures'] = False
+
+    args_dict['variables'] = 600
+    args_dict['r_list'] = [4.258]
+    args_dict['q_list'] = [0.2, 0.618]
+    args_dict['number_of_formulas'] = 5000
+    args_dict['create_unsat'] = False
+    args_dict['create_deceptive'] = True
+    args_dict['create_pairs'] = False
+
     utilities.initialize_random_state(args_dict['random_state'])
 
     paths = Paths(working_directory=args_dict['working_directory'])
 
-    print(f"Started at {datetime.datetime.now('%H:%M:%S')}")
+    print(f"Started at {datetime.datetime.now().strftime('%H:%M:%S')}")
     if args_dict['create_formulas']:
         f = Formulas(
             n=args_dict['variables'],
@@ -51,7 +65,7 @@ if __name__ == '__main__':
             k=args_dict['literals'],
         )
         f.create_dataset()
-        print(f"{datetime.datetime.now('%H:%M:%S')} Created formulas")
+        print(f"{datetime.datetime.now().strftime('%H:%M:%S')} Created formulas")
 
     if args_dict['run_solver']:
         if args_dict['algorithm_name'] not in SUPPORTED_SOLVERS:
@@ -72,7 +86,7 @@ if __name__ == '__main__':
             n_jobs=args_dict['n_jobs'],
         )
         s.run()
-        print(f"{datetime.datetime.now('%H:%M:%S')} Ran solver")
+        print(f"{datetime.datetime.now().strftime('%H:%M:%S')} Ran solver")
 
     if args_dict['create_dataset']:
         d = Dataset(
@@ -90,7 +104,7 @@ if __name__ == '__main__':
             n_jobs=args_dict['n_jobs']
         )
         d.create()
-        print(f"{datetime.datetime.now('%H:%M:%S')} Created dataset")
+        print(f"{datetime.datetime.now().strftime('%H:%M:%S')} Created dataset")
 
     if args_dict['train_model']:
         if args_dict['test_size'] <= 0 or args_dict['test_size'] >= 1:
