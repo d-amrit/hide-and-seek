@@ -15,7 +15,7 @@ from features.feature_generation import feature_generation
 class SolversComputation:
     def __init__(self, n, step_list, no_of_trials, save_path, formula_path, algorithm_name, wp=None,
                  random_state=None, max_seed_value=100_000, working_directory='data/', extension='json',
-                 delete_raw_files=True, architecture='parallel', n_jobs=-1, clean_up=True):
+                 delete_raw_files=True, architecture='parallel', n_jobs=-1, clean_up=False):
 
         self.random_state = utilities.initialize_random_state(random_state)
 
@@ -40,7 +40,7 @@ class SolversComputation:
         self.wip_folder, self.partial_folder = self.get_folder_paths()
 
         self.all_formulas = set([i.replace(f'.{self.extension}', '') for i in next(os.walk(self.formula_path))[2]
-                                 if f'.{self.extension}' in i])
+                                 if f'.{self.extension}' in i and f'n_{n}' in i])
         self.pending_formulas = self.get_pending_formulas()
 
     def get_folder_paths(self):
