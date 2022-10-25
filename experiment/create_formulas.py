@@ -36,31 +36,41 @@ class Formulas:
         formula_dict = {'random_state': random_state}
 
         if formula_type == 'unsat':
-            formula = create_random_sat_instance(
-                n=self.n, 
-                r=r,
-                k=self.k,
-                random_state=random_state
-            )
-            self._save_formula(formula, formula_idx, formula_type, formula_dict, r)
+            file_name = self._gen_file_name(formula_idx, formula_type, r)
+            file_path = os.path.join(self.save_path, file_name)
+            if not os.path.exists(file_path):
+                formula = create_random_sat_instance(
+                    n=self.n,
+                    r=r,
+                    k=self.k,
+                    random_state=random_state
+                )
+                self._save_formula(formula, formula_idx, formula_type, formula_dict, r)
+            else:
+                print(f'FILE EXISTS: {file_path}')
         else:
-            s = DeceptiveFormula(
-                n=self.n, 
-                r=r,
-                q=q, 
-                k=self.k,
-                u_list=self.u_list,
-                random_state=random_state
-            )
+            file_name = self._gen_file_name(formula_idx, formula_type, r, q=q)
+            file_path = os.path.join(self.save_path, file_name)
+            if not os.path.exists(file_path):
+                s = DeceptiveFormula(
+                    n=self.n,
+                    r=r,
+                    q=q,
+                    k=self.k,
+                    u_list=self.u_list,
+                    random_state=random_state
+                )
 
-            formula_dict['satisfying_assignment'] = [bool(i) for i in s.assignment[1:]]
-            self._save_formula(s.formula_1, formula_idx, 'sat', formula_dict, r, q=q)
+                formula_dict['satisfying_assignment'] = [bool(i) for i in s.assignment[1:]]
+                self._save_formula(s.formula_1, formula_idx, 'sat', formula_dict, r, q=q)
             
-            if self.create_pairs:
-                s.gen_formulas_without_satisfying_assignment()
-                formula_dict['variable_name_permutation'] = s.variable_name_permutation
-                for idx, _formula in enumerate(s.formula_list):
-                    self._save_formula(_formula, formula_idx, 'pair', formula_dict, r, q=q, u=s.u_list[idx])
+                if self.create_pairs:
+                    s.gen_formulas_without_satisfying_assignment()
+                    formula_dict['variable_name_permutation'] = s.variable_name_permutation
+                    for idx, _formula in enumerate(s.formula_list):
+                        self._save_formula(_formula, formula_idx, 'pair', formula_dict, r, q=q, u=s.u_list[idx])
+            else:
+                print(f'FILE EXISTS: {file_path}')
                 
     def create_dataset_for_one_formula_type(self, formula_type, q=None):
         for r in self.r_list:
@@ -85,9 +95,8 @@ class Formulas:
             os.makedirs(save_path)
         return save_path
 
-    @staticmethod
-    def _gen_file_name(formula_idx, formula_type, r, q=None, u=None):
-        prefix = f"{formula_type}_r_{r}"
+    def _gen_file_name(self, formula_idx, formula_type, r, q=None, u=None):
+        prefix = f"{formula_type}_r_{r}_n_{self.n}"
         suffix = f"{'0' * (6 - len(str(formula_idx)))}{formula_idx}.json"
         middle = "_"
         if u is not None:
