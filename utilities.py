@@ -225,7 +225,7 @@ def parse_arguments():
                         help='Create dataset of individual formulas.')
     parser.add_argument('-cp', '--create_pairs', type=bool, default=True,
                         help='Create paired instances for the deceptive formulas.')
-    parser.add_argument('-f', '--number_of_formulas', default=10, help='Number of formulas to generate.')
+    parser.add_argument('-f', '--number_of_formulas', type=int, default=10, help='Number of formulas to generate.')
 
     # --------------------------------------------------------------------------------------------------------------
     # III. Solver-related variables

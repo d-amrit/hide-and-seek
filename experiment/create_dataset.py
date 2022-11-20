@@ -9,7 +9,7 @@ import utilities
 
 class Dataset:
     def __init__(self, n, r_list, q_list, u_list, step_list, number_of_formulas, datasets_path, solver_data_path,
-                 balance_data=True, create_pairs=True, create_individual=True, random_state=None, n_jobs=-1):
+                 balance_data=True, create_pairs=False, create_individual=True, random_state=None, n_jobs=-1):
 
         self.random_state = utilities.initialize_random_state(random_state)
 
@@ -28,14 +28,14 @@ class Dataset:
         # Get path where solver data is stored.
         self.solver_data_path = solver_data_path
 
-        # Get indices for pair of formulas experiment
+        # Get indices for a pair of formulas experiment
         self.y_0, self.y_1 = self._split_formulas_into_pairs()
 
     def create_individual_formulas_dataset(self, r, q):
-        dataset_name = f'Individual_r_{r}_q_{q}'
+        dataset_name = f'Individual_r_{r}_n_{self.n}_q_{q}'
 
         file_list = [f for f in next(os.walk(self.solver_data_path))[2] if
-                     f'sat_r_{r}_q_{q}' in f or f'unsat_r_{r}' in f]
+                     f'sat_r_{r}_n_{self.n}_q_{q}' in f or f'unsat_r_{r}_n_{self.n}' in f]
         df_list = [pandas.read_csv(self.solver_data_path + f) for f in file_list]
 
         self._concat_and_save(df_list, dataset_name)

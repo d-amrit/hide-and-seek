@@ -1,7 +1,6 @@
 import numpy as np
 from catch22 import catch22_all
 import itertools
-from pulp import LpVariable, LpProblem, LpMaximize
 
 
 DECILES = np.arange(0, 1.1, 0.1)
@@ -37,6 +36,7 @@ def calculate_lp_slack_coeff_of_var(formula, n, formula_details):
     """
     From Predicting Satisfiability at the Phase Transition, Xu et al. (2012)
     """
+    from pulp import LpVariable, LpProblem, LpMaximize
     # Initialize maximization problem.
     problem = LpProblem("SAT_Relaxation", LpMaximize)
 

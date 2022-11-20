@@ -31,24 +31,7 @@ class Paths:
 if __name__ == '__main__':
     args_dict = utilities.parse_arguments()
 
-    args_dict['create_formulas'] = False
-    args_dict['run_solver'] = True
-    args_dict['create_dataset'] = False
-    args_dict['train_model'] = False
-    args_dict['create_figures'] = False
-
-    args_dict['variables'] = 20_000
-    args_dict['r_list'] = [5]
-    args_dict['q_list'] = [0.618]
-    args_dict['number_of_formulas'] = 100
-    args_dict['create_unsat'] = False
-    args_dict['create_deceptive'] = False
-    args_dict['create_pairs'] = False
-    args_dict['step_list'] = [2]
-    args_dict['no_of_trials'] = 8
-
     utilities.initialize_random_state(args_dict['random_state'])
-
     paths = Paths(working_directory=args_dict['working_directory'])
 
     print(f"Started at {datetime.datetime.now().strftime('%H:%M:%S')}")
