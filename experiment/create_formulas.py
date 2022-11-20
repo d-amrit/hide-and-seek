@@ -85,9 +85,8 @@ class Formulas:
             os.makedirs(save_path)
         return save_path
 
-    @staticmethod
-    def _gen_file_name(formula_idx, formula_type, r, q=None, u=None):
-        prefix = f"{formula_type}_r_{r}"
+    def _gen_file_name(self, formula_idx, formula_type, r, q=None, u=None):
+        prefix = f"{formula_type}_r_{r}_n_{self.n}"
         suffix = f"{'0' * (6 - len(str(formula_idx)))}{formula_idx}.json"
         middle = "_"
         if u is not None:

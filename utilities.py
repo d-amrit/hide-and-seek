@@ -165,6 +165,7 @@ def stratified_train_test_split(input_df, exclude_columns=None, seed=0, test_siz
     return split_train_test(input_df, train_ids, test_ids, column_list)
 
 
+
 def parse_arguments():
     """
     Allow arguments to be passed via the command line.
@@ -178,17 +179,17 @@ def parse_arguments():
     parser.add_argument('-F', '--create_formulas', type=bool, default=True, help='Create dataset with formulas.')
 
     # Stage 2: Run solver on formulas
-    parser.add_argument('-S', '--run_solver', type=bool, default=True, help='Run solver on the generated formulas.')
+    parser.add_argument('-S', '--run_solver', type=bool, default=False, help='Run solver on the generated formulas.')
 
     # Stage 3: Create dataset (csv) used for training and testing.
-    parser.add_argument('-D', '--create_dataset', type=bool, default=True,
+    parser.add_argument('-D', '--create_dataset', type=bool, default=False,
                         help='Create datasets from solver computation.')
 
     # Stage 4: Train model
-    parser.add_argument('-M', '--train_model', type=bool, default=True, help='Train model on the dataset.')
+    parser.add_argument('-M', '--train_model', type=bool, default=False, help='Train model on the dataset.')
 
     # Stage 5: Create figures
-    parser.add_argument('-P', '--create_figures', type=bool, default=True, help='Create figures used in the paper.')
+    parser.add_argument('-P', '--create_figures', type=bool, default=False, help='Create figures used in the paper.')
 
     # Seed for replication.
     parser.add_argument('-R', '--random_state', type=int, default=0, help='Input random state using to seed the '
