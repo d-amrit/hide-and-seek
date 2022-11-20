@@ -7,8 +7,6 @@ This repository contains code for the paper Hide and Seek: Scaling Machine Learn
 All results can be replicated by running `pipeline.py` with the requisite arguments. 
 The pipeline has 4 stages. We describe each stage with their relevant arguments below:
 
-
-
 ### 1. Create formulas
 
 1. If you only want to create formulas, add `-F true`.
@@ -101,4 +99,7 @@ parser.add_argument('-W', '--working_directory', type=str, default=None,
                     help='Directory where all files are saved.')
 ```
 
+## Issues
+
+If you face any issues, please feel free to reach out to me at amrit_daswaney@berkeley.edu and I will do my best to help.
 
