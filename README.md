@@ -1,6 +1,6 @@
-# Hide and Seek: Scaling Machine Learning for Combinatorial Optimization via the Probabilistic Method
+# Arbitrarily Large Labelled Satisfiability Formulas for Machine Learning Training
 
-This repository contains code for the paper Hide and Seek: Scaling Machine Learning for Combinatorial Optimization via the Probabilistic Method by Dimitris Achlioptas, Amrit Daswaney, and Periklis Papakonstantinou.
+This repository contains code for the paper Arbitrarily Large Labelled Satisfiability Formulas for Machine Learning Training.
 
 ## Pipeline
 
